@@ -15,8 +15,13 @@ WORKDIR /app
 
 COPY --from=builder /app/auth-service .
 
+COPY wait-for-postgres.sh /wait-for-postgres.sh
+RUN chmod +x /wait-for-postgres.sh
+
 COPY .env .
 
 EXPOSE 8080
 
-CMD ["./auth-service"]
+RUN apt-get update && apt-get install -y netcat && rm -rf /var/lib/apt/lists/*
+
+ENTRYPOINT ["/wait-for-postgres.sh", "./auth-service"]

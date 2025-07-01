@@ -1,17 +1,6 @@
 version: '3.9'
 
 services:
-  auth-service:
-    build: .
-    ports:
-      - "8080:8080"
-    env_file:
-      - .env
-    depends_on:
-      - postgres
-    networks:
-      - app-network
-
   postgres:
     image: postgres:15
     restart: always
@@ -25,6 +14,22 @@ services:
       - "5432:5432"
     networks:
       - app-network
+
+  auth-service:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: authdb
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+    restart: unless-stopped
 
 volumes:
   pgdata:
