@@ -1,8 +1,6 @@
-## *Реализация сервиса аутентификации на Go с использованием PostgreSQL и Docker*
+# Реализация сервиса аутентификации на Go с использованием PostgreSQL и Docker
 
 ## Запуск
-
-```bash
 docker-compose -f docker-compose.yml up -d
 
 ## Swagger
